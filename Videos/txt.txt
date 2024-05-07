@@ -1,0 +1,28 @@
+Nodejs nd Express
+
+React and Rest API
+
+MongoDB and MySQL
+
+setting up Node.js
+File servers and URL passing
+Npm and packages
+Express API GET and POST
+
+
+HTTP -> hyper text transfer protocol 
+
+it converts the hyper text i.e. the URLs into the address
+from where we requires the files, 
+
+HTTP are bsically protocols defined in order to fetch the 
+files from the server without having to memorize the typical
+file addresses stored in the format of binary or hexadecimal
+or so on, and can easily fetch them using high level languages.
+
+
+HTTP helps us to establish a communication between
+web browsers and the web servers
+
+
+Express => Express is a Node.js framework used to create robust web and mobile application.
