@@ -93,6 +93,7 @@ var func5 = ()=>{
 // API Basics
 
 var express = require('express');
+const { type } = require('os');
 var app = express();
 
 var apiFunc = ()=>{
@@ -220,10 +221,18 @@ app.post('/student', jsonParser, (req, res) => {
 });
 
 // Creating an endpoint to retrieve all student data
-app.get('/students', (req, res) => {
+app.get('/students/id/:id', (req, res) => {
   res.json(students);
-  res.json(students[0]);
-  res.json(students[1]);
+  console.log(students)
+  console.log(typeof(students[0]['studentID']));
+  console.log(typeof(req.params.id));
+
+  if(students[Number(req.params.id)-1]['studentID'] == req.params.id){
+    console.log(req.params.id);
+  }
+  else{
+    console.log('Ain\'t gonna work this way!!')
+  }
 });
 
 app.listen(3000, () => {
@@ -231,4 +240,4 @@ app.listen(3000, () => {
 });
 }
 
-// assignment();
+assignment();

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
     // var root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -15,6 +15,7 @@ import ReactDOM from 'react-dom';
 
     // root.render(parentdiv);
 
+    // Using JSX and React Fragments
 
     var Parentdiv = ()=>{
         return (
@@ -25,6 +26,26 @@ import ReactDOM from 'react-dom';
             <h3>Hello World!!</h3>
             <h5>It's been a while!!</h5>
 
+            <div id='parenttable'>
+            {/* Ways of declaring a React Component inside another React Component */}
+            {/* Ist way */}
+            <Table/>
+            {/* IInd way */}
+            <Table></Table>
+            {/* IIIrd way */}
+            {Table()}
+            </div>
+
+            <Button/>
+            {Button()}
+
+            <Mybutton/>
+            </>
+        )
+    }
+
+    var Table = ()=>{
+        return (
             <table>
 
             <tr>
@@ -58,16 +79,30 @@ import ReactDOM from 'react-dom';
             </tr>
 
             </table>
+        )
+    }
 
+    var Button = ()=>{
+        return(
+            <>
+            <button>Submit</button>
             </>
         )
     }
         
+    var Mybutton = ()=>{
+
+        function print(){
+            console.log('Hello World!!');
+        }
+
+        return(
+            <button onClick={print()}>Hello World</button>
+        )
+    }
 
     var root = ReactDOM.createRoot(document.getElementById('root'));
 
     root.render(<Parentdiv />);
-
-
 
 // npx parcel index_live.html
