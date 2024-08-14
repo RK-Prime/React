@@ -1,41 +1,111 @@
-import { useEffect } from "react"
-import { useParams } from "react-router-dom";
+import { useState} from "react";
+// useEffect 
+// import { useParams } from "react-router-dom";
+import { data } from "../functions.js/exampleData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+
+import RestaurantItem from "./RestaurantItem.jsx";
 
 export const RestaurantMenu = ()=>{
 
-    const params = useParams();
-    console.log(params);
+    // const [itemData, setItemData] = useState({})
+    const [itemTitle, setitemTitle] = useState('');
+    const itemdata = data();
+    // const params = useParams();
+    // console.log(params);
 
-    useEffect(()=>{
-        fetchMenu()
-    });
-
-    async function fetchMenu(){
-        const menu_data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=27.9000799&lng=78.0682684&restaurantId=${params.resId}&catalog_qa=undefined&submitAction=ENTER`);
-        const resmenu_data = await menu_data.json();
-        console.log(resmenu_data);
-        
-        let arr_a = resmenu_data.data.cards[5].groupedCard.cardGroupMap.REGULAR.cards;
-        let arr_b = arr_a[12].card.card.itemCards;
-
-        console.log(arr_b)
-
-        // console.log(resmenu_data.data.cards[5].groupedCard.cardGroupMap.REGULAR.cards[12].card.card.itemCards[0].card.info.description);
-        
-        // for(let i=0;i<arr_b.length;i++){
-
-        //     console.log(arr_b[i].card.info.description);
-        // }
     
+    // console.log(itemdata);
+
+    // console.log(itemData);
+
+    // Toggle Function for Restaurant Item 
+    function toggleitemTitle(currentitemTitle){
+
+        setitemTitle((previtemTitle)=>
+        // if current item Title is equal to the previous item Title
+        // then we will not do anything,
+        // but if current item Title is not equal to it we will change the itemTitle value to the currentitemTitle
+            (currentitemTitle === previtemTitle ? 
+            '':
+            currentitemTitle
+            )
+            );
     }
+    
+    // let itemslist_1 = itemData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1];
+    // // let items = itemslist_1.card.card.itemCards;
+    // // let itemsTitle = itemslist_1.card.card.title;
 
+    // console.log(itemslist_1)
 
+    // console.log(itemsTitle);
+    // console.log(items);
 
+    
+    
     return(
-        <div style={{position:'absolute', top:'100px'}}>
-        <h1>Restaurant Menu for Swiggy Clone</h1>
-        <h1>Restaurant Menu for Swiggy Clone</h1>
-        <h1>Restaurant Menu for Swiggy Clone</h1>
-    </div>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+    
+                <h2>Hello!!</h2>
+                
+                    {
+                        itemdata.map((item)=>{
+                            // console.log(item)
+                            let items = item.itemsInfo;
+                            return(
+                            <>
+                            <div className='itemSectionDiv'>
+    
+                                            {/* Item menu Title Span Start here */}
+                                            {/* onClick={btnFunc} */}
+                                            <button name={item.Title} 
+                                            className='titleSpan_restaurantItem' 
+                                            // itemTitle is toggeling here
+                                            // we are using an arrow function as if we call a function directly
+                                            // then it will cause a infinite number of loops in react.
+                                            // throwing an error
+                                            onClick={()=>{
+                                                toggleitemTitle(item.Title)
+                                            }}
+                                            >
+                                            {/* <span className='titleSpan' onClick={btnFunc}> */}
+                                            <h1>{item.Title}({item.itemsInfo.length})</h1>
+                                            {/* <button className="titleBtn" style={{transform: rotate}}> */}
+                                                <FontAwesomeIcon 
+                                                className="titleBtn" style={{transform: itemTitle === item.Title?'rotateX(180deg)' : 'rotateX(0deg)'}}
+                                                icon={faCaretDown}/>
+                                            {/* </button> */}
+                                            </button>
+                                            {/* </span> */}
+    
+                                            {/* End here */}
+    
+                                            {/* Item Menu starts here */}
+                                            {/* style={{display: displayVal}} */}
+
+                                            {/* Comparing itemTitle here to change the div state according to the title */}
+                                            <div id={item.Title} className={`itemsDiv ${itemTitle===item.Title ? 'openitemsDiv'  : 'closeitemsDiv'}`}>
+                                                <h5>hollo</h5>
+                                            {items.map((itemInfoVal)=>{
+                                                // console.log(itemInfoVal);
+                                                return(
+                                                    <>
+                                                    <h5>hello!!</h5>
+                                                    <RestaurantItem itemInfo={itemInfoVal}/>
+                                                    </>
+
+                                                )
+                                            })}
+                                            </div>
+                            </div>
+                            <section className='btmSpan'></section>
+                            </>    
+                            )
+                        })
+                    }
+        </div>
     )
+
 }

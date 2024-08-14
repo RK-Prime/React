@@ -13,7 +13,7 @@ const Search = (props) => {
   const [searchText, setSearchText] = useState("");
 
   return (
-    <>
+    <div className='searchDiv'>
       {/* here we will apply onChange event Handler to the input feild to get the user input as soon as it has been entered. */}
       
       <input
@@ -27,7 +27,7 @@ const Search = (props) => {
       <button id="searchbtn" className="btn" type="button" onClick={searched}>
         Search
       </button>
-    </>
+    </div>
   );
 };
 // Component Ends

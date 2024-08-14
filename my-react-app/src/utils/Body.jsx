@@ -1,15 +1,22 @@
 import Rescard from "./Cards";
 import Search from "./Search";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TopRated from "./TopRatedFilter";
 import Shimmer from "./ShimmerUI";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+
+import UserContext from "../functions.js/userContext.js";
+import SignUp from "./SignUp.jsx";
+// import SignUp from "./SignUp.jsx";
+// import SignUp from "../utils/SignUp.jsx";
 
 const Body = () => {
   // Hook =>
   // useState Hook => Most used hook in react
   const [restaurants, set_restaurants] = useState([]);
   const [restaurantList, set_restaurantList] = useState(restaurants);
+
+  const {user, setUserName, visible, setIsVisible} = useContext(UserContext);
 
   // Ques: Why are we using two use States ?
   /*
@@ -53,7 +60,7 @@ const Body = () => {
     // );
 
     let data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.9067299&lng=78.0544946&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.899120276651594&lng=78.06671295315027&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
 
     // here data is a promise and not a json response
@@ -96,6 +103,7 @@ const Body = () => {
     // for(let i=0;i<swiggyRestaurants.length;i++){
     //     console.log(swiggyRestaurants[i].info);
     // }
+
   }
 
   console.log("Body Component");
@@ -148,12 +156,28 @@ const Body = () => {
   /* if restaurantList is undefined */
 
   return (
-    // If True => if restaurantList is undefined
+
+    <>
+    {// If True => if restaurantList is undefined
     // If False => if restauranList is not undefined and contain values.
+    }
+
+    {visible
+    ?<SignUp setVisible={setIsVisible}/>
+    : ''}
+
     <div id="Body_component">
       <div id="btn_div">
         <Search search={searchfunction} />
         <TopRated resFilter={itemFilter} />
+        <input onChange={(e)=>setUserName(e.target.value)}
+        style={{
+          padding: '5px',
+          height: 'fit-content',
+          width: '150px'
+        }}
+        ></input>
+        <h6 style={{height:'fit-content', margin: ' 17px 15px',}}>UserName : {user}</h6>
       </div>
         {restaurantList.length === 0 ?
         <Shimmer/>
@@ -176,6 +200,8 @@ const Body = () => {
 
         
     </div>
+        
+    </>
   );
 };
 

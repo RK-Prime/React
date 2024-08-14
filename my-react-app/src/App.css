@@ -39,13 +39,12 @@
 
 #headernav{
 
-  position: fixed;
+  position: sticky;
   overflow: hidden;
 
   z-index: 1;
   background-color: white;
 
-  width: 100%;
 
   display: flex;
   flex-direction: row;
@@ -55,6 +54,7 @@
   padding-top: 2px;
   box-shadow: 3px -6px 60px rgba(211, 211, 211, 0.685);
 
+  top: 0;
 }
 
 #sitelogo{
@@ -85,6 +85,11 @@
   margin-right: 80px;
 }
 
+.onlineStatus{
+  font-family: cursive;
+  color: gray;
+}
+
 .link{
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: bold;
@@ -105,6 +110,10 @@
 /* Header Links  */
 
 /* <--------> */
+
+#Body_component{
+  margin: 5vh 0px 10vh 0px;
+}
 
 .card_img{
   width: 210px;
@@ -180,16 +189,6 @@
   justify-content: center;
 }
 
-
-#Body_component{
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  height: max-content;
-  margin: 10px;
-}
-
 #searchinp{
   height: 30px;
   border: solid orange;
@@ -225,8 +224,10 @@
 
 #btn_div{
   position: static;
-  margin-top: 60px;
-  /* border: solid; */
+  padding: 5px;
+  margin: 0px 0px 0px 50px;
+  justify-content: space-around;
+  width: fit-content;
 
   /* margin: 50px 0px 0px 0px; */
   display: flex;
@@ -269,3 +270,330 @@
 
 /* Shimmer part Ends */ 
 
+.footLogo{
+  display: flex;
+  flex-direction: row;
+
+  font-size: 1vw;
+
+  width: fit-content;
+
+}
+
+.footer{
+  color: black;
+  background-color: lightgrey;
+  position: static;  
+
+  float: bottom;
+  margin: 0px;
+  margin-top: 10vw;
+  padding: 5vw 3vw;
+
+  font-size: 1vw;
+
+  height: fit-content;
+
+  display: flex;
+  justify-content: center;
+}
+
+.footul{
+  margin-top: 1cm;
+  list-style-type: none;
+  font-family: cursive;
+}
+
+.liHead{
+  font-weight: 600;
+  padding-bottom: 1vw;
+}
+
+.liItem{
+  font-weight: 400;
+  padding: 5px 0px;
+}
+
+:root{
+  --imgSize: 13vw;
+  --padd : 1.5vw;
+}
+
+.itemSection{
+  background-color: rgb(252, 252, 204);
+  color: black;
+  padding: calc(var(--padd));
+  margin: calc(3*var(--padd)) calc(6*var(--padd));
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+
+.itemHead{
+  font-size: calc(var(--imgSize)/9);
+  font-family: cursive;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.795);
+}
+
+.itemDesc, .itemPrice, .itemRating{
+  font-family: cursive;
+  color: rgb(85, 85, 85);
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: calc(var(--imgSize)/13);
+}
+
+.itemHead{
+  margin-top: 5px;
+  margin-bottom: 2px;
+}
+
+.itemPrice{
+  margin-top: 0px;
+  color: black;
+  font-weight: bolder;
+  font-size: 18px;
+}
+
+.itemRating, .itemDesc{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.itemImgSpan{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: calc(var(--imgSize)/13);
+}
+
+.itemImg{
+  width: var(--imgSize);
+  height: var(--imgSize);
+  border-radius: calc(var(--imgSize)/9);
+  position: static;
+}
+
+.itemImgbtn{
+  
+  cursor: pointer;
+
+  padding: calc(var(--imgSize)/14);
+
+  font-family: cursive;
+  font-size: calc(var(--imgSize)/12);
+  font-weight: 600;
+  color: green!important;
+  background-color: white;
+  border: solid 2px green;
+  border-radius: calc(var(--imgSize)/13);
+
+  color: calc(var(--imgSize)/9);
+  position: absolute;
+  margin-top: 10.5vw;
+
+  width: calc(var(--imgSize));
+}
+
+.itemImgbtn:hover{
+  transition: ease-in-out;
+  color: white!important;
+  background-color: rgb(0,128,0);
+  border-color: rgba(0, 0, 0, 0.3);
+
+  transition-duration: 0.3s;
+}
+
+.titleBtn{
+  color: black;
+  border: none;
+  background-color: white;
+
+  height: 1.5vw;
+
+  transition: ease;
+  transition-duration: 0.5s;
+}
+
+.titleSpan_restaurantItem{
+
+  border: none;
+  background-color: white;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px;
+  width: 80%;
+
+  margin-left: 10%;
+}
+
+
+.titleSpan_restaurantItem>h1, .titleBtn{
+  font-size: 1.5vw;
+  padding: 0px;
+  margin: 0px; 
+}
+
+.itemSectionDiv{
+  width: 80%;
+  margin-bottom: 0.5cm;
+}
+
+.itemsDiv{
+  border: solid rebeccapurple;
+  display: block;
+}
+
+.openitemsDiv{
+  display: block;
+}
+
+.closeitemsDiv{
+  display: none;
+}
+
+.btmSpan{
+  background-color: lightgrey;
+  height: 20px;
+  display: flex;
+  width: 50%;
+  text-align: center;
+
+  margin-bottom: 2vw;
+}
+
+
+
+/* Sign Up */
+
+
+.signupform, .loginform{
+  background-color: rgb(211,211,211,0.5);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+  z-index: 1;
+  position: top;
+
+}
+
+.formsignup, .formlogin{
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  
+
+  top: 0%;
+  left: 50%;
+  right: 50%;
+
+  transform: translate(-50%,0%);
+
+  justify-content: center;
+
+  padding: 20px;
+
+  width: fit-content;
+
+  background-color: white;
+
+  border-radius: 15px;
+
+  box-shadow: rgb(78, 78, 78, 0.5) 0px 10px 30px;
+}
+
+
+.cancelspan{
+  display: flex;
+  justify-content: flex-end;
+
+  margin: 0px;
+
+}
+
+.cancelspan>button{
+  background-color: transparent;
+
+  border: none;
+
+  font-size: 1.1vw;
+  font-weight: bolder;
+
+  cursor: pointer;
+
+
+  position: absolute;
+}
+
+.titleSpan{
+  display: flex;
+  justify-content: center;
+
+  font-size: larger;
+  font-family: cursive;
+  letter-spacing: 2px;
+
+  color: orange;
+}
+
+.titleSpan>h5{
+  margin: 0px;
+}
+
+.formlabel{
+  font-family:cursive;
+
+  margin: 10px 0px;
+
+  font-size: 1vw;
+  font-weight: bolder;
+
+  letter-spacing: 2px;
+
+  color: orange;
+  text-shadow: bisque 1.5px 1.5px 0px;
+}
+
+.forminput{
+  padding: 8px;
+  letter-spacing: 2px;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  width: 20vw;
+
+  border: solid orange 2px;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.span{
+  margin: 8px 0px;
+
+  font-size: 1vw;
+}
+
+.btnspan{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.checkboxspan{
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+};

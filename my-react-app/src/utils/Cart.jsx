@@ -1,9 +1,32 @@
+// useSelector Hook for selector 
+import { useSelector } from "react-redux";
+
+import RestaurantItem from "./RestaurantItem";
+
+// useDispatch Hook for dispatch
+import { useDispatch } from "react-redux";
+import { clearCart } from "../functions.js/cartSlice";
+
+
 export const Cart = () =>{
+
+    let items = useSelector((store)=>store.cart.items);
+
+    let dispatch = useDispatch();
+
+    function handleClearCart(){
+        dispatch(clearCart());
+    }
+
     return(
-        <div style={{position:'absolute', top:'100px'}}>
-            <h1>Cart Page for Swiggy Clone</h1>
-            <h1>Cart Page for Swiggy Clone</h1>
-            <h1>Cart Page for Swiggy Clone</h1>
+        <div style={{top:'100px'}}>
+            <button onClick={handleClearCart}>Clear Cart</button>
+            {items.map((itemInfoVal)=>{
+             // console.log(itemInfoVal);
+            return(
+                <RestaurantItem itemInfo={itemInfoVal}/>
+            )
+            })}
         </div>
     )
 }
