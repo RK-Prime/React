@@ -16,17 +16,22 @@ import { Provider } from 'react-redux';
 import appStore from './functions.js/appStoreRedux.js';
 
 import UserContext from './functions.js/userContext.js';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 function App() {
 
-  const [userName, setUserName] = useState('Person 1');
+  const [userNameDisplay, setUserNameDisplay] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartItemslen, setCartItemslen] = useState(cartItems.length);
+
   return (
     <Provider store={appStore}>
     <UserContext.Provider 
-    value={{user : userName, setUserName,
-    visible: isVisible, setIsVisible
+    value={{username : userNameDisplay, setUserNameDisplay,
+    visible: isVisible, setIsVisible,
+    cartitems : cartItems, setCartItems,
+    cartitemslen : cartItemslen, setCartItemslen
     }}>
     <Header/>
     <Outlet/>

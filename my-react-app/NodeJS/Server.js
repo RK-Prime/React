@@ -8,10 +8,15 @@ const cors = require('cors');
 
 app.use(express.json());
 app.use(cors());
+// app.use(cors({
+//     origin : 'http://localhost:3000',
+//     methods : ['GET', 'POST', 'PUT','PATCH', 'DELETE'],
+//     allowedHeaders : ['Content-Type', 'Authorization']
+// }));
 
 mongoose.connect("mongodb+srv://Rohan:Rohan@cluster0.tpc5v6g.mongodb.net/");
 
-app.listen(5000, ()=>{
+app.listen(5000, '127.0.0.1',()=>{
     console.log('Server running on port 5000')
 })
 

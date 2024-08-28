@@ -1,4 +1,4 @@
-import { useState} from "react";
+// import { useState} from "react";
 // useEffect 
 // import { useParams } from "react-router-dom";
 import { data } from "../functions.js/exampleData";
@@ -7,10 +7,12 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 import RestaurantItem from "./RestaurantItem.jsx";
 
+import $ from 'jquery';
+
 export const RestaurantMenu = ()=>{
 
     // const [itemData, setItemData] = useState({})
-    const [itemTitle, setitemTitle] = useState('');
+    // const [itemTitle, setitemTitle] = useState('');
     const itemdata = data();
     // const params = useParams();
     // console.log(params);
@@ -22,17 +24,34 @@ export const RestaurantMenu = ()=>{
 
     // Toggle Function for Restaurant Item 
     function toggleitemTitle(currentitemTitle){
+        
+       $(`#${currentitemTitle}`)
+       .toggle()
+       .css('transition-duration', '2s')
+       ;
+       $(`.${currentitemTitle}rotate`)
+       .toggleClass('rotateONClass')
+       .css('transition-duration', '0.3s')
 
-        setitemTitle((previtemTitle)=>
-        // if current item Title is equal to the previous item Title
-        // then we will not do anything,
-        // but if current item Title is not equal to it we will change the itemTitle value to the currentitemTitle
-            (currentitemTitle === previtemTitle ? 
-            '':
-            currentitemTitle
-            )
-            );
+       $(`.${currentitemTitle}btmSpan`)
+       .toggle();
+
+
+
+        // setitemTitle(currentitemTitle)
+
+
+        // setitemTitle((previtemTitle)=>
+        // // if current item Title is equal to the previous item Title
+        // // then we will not do anything,
+        // // but if current item Title is not equal to it we will change the itemTitle value to the currentitemTitle
+        //     (currentitemTitle === previtemTitle ? 
+        //     '':
+        //     currentitemTitle
+        //     )
+        //     );
     }
+
     
     // let itemslist_1 = itemData.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1];
     // // let items = itemslist_1.card.card.itemCards;
@@ -60,8 +79,9 @@ export const RestaurantMenu = ()=>{
     
                                             {/* Item menu Title Span Start here */}
                                             {/* onClick={btnFunc} */}
-                                            <button name={item.Title} 
-                                            className='titleSpan_restaurantItem' 
+                                            <button name={item.Title}
+
+                                            className={`titleSpan_restaurantItemBtn ${item.Title}`}
                                             // itemTitle is toggeling here
                                             // we are using an arrow function as if we call a function directly
                                             // then it will cause a infinite number of loops in react.
@@ -74,7 +94,7 @@ export const RestaurantMenu = ()=>{
                                             <h1>{item.Title}({item.itemsInfo.length})</h1>
                                             {/* <button className="titleBtn" style={{transform: rotate}}> */}
                                                 <FontAwesomeIcon 
-                                                className="titleBtn" style={{transform: itemTitle === item.Title?'rotateX(180deg)' : 'rotateX(0deg)'}}
+                                                className={`titleBtn ${item.Title}rotate`}
                                                 icon={faCaretDown}/>
                                             {/* </button> */}
                                             </button>
@@ -86,13 +106,14 @@ export const RestaurantMenu = ()=>{
                                             {/* style={{display: displayVal}} */}
 
                                             {/* Comparing itemTitle here to change the div state according to the title */}
-                                            <div id={item.Title} className={`itemsDiv ${itemTitle===item.Title ? 'openitemsDiv'  : 'closeitemsDiv'}`}>
-                                                <h5>hollo</h5>
+                                            <div id={item.Title} 
+                                            className='itemsDiv'>
+                                                {/* <h5>hollo</h5> */}
                                             {items.map((itemInfoVal)=>{
                                                 // console.log(itemInfoVal);
                                                 return(
                                                     <>
-                                                    <h5>hello!!</h5>
+                                                    {/* <h5>hello!!</h5> */}
                                                     <RestaurantItem itemInfo={itemInfoVal}/>
                                                     </>
 
@@ -100,9 +121,10 @@ export const RestaurantMenu = ()=>{
                                             })}
                                             </div>
                             </div>
-                            <section className='btmSpan'></section>
+                            <section className={`${item.Title}btmSpan btmSpan`}></section>
                             </>    
                             )
+                        
                         })
                     }
         </div>

@@ -16,7 +16,7 @@ const Body = () => {
   const [restaurants, set_restaurants] = useState([]);
   const [restaurantList, set_restaurantList] = useState(restaurants);
 
-  const {user, setUserName, visible, setIsVisible} = useContext(UserContext);
+  const {user, visible, setIsVisible} = useContext(UserContext);
 
   // Ques: Why are we using two use States ?
   /*
@@ -62,6 +62,7 @@ const Body = () => {
     let data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.899120276651594&lng=78.06671295315027&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
+
 
     // here data is a promise and not a json response
 
@@ -170,13 +171,7 @@ const Body = () => {
       <div id="btn_div">
         <Search search={searchfunction} />
         <TopRated resFilter={itemFilter} />
-        <input onChange={(e)=>setUserName(e.target.value)}
-        style={{
-          padding: '5px',
-          height: 'fit-content',
-          width: '150px'
-        }}
-        ></input>
+        
         <h6 style={{height:'fit-content', margin: ' 17px 15px',}}>UserName : {user}</h6>
       </div>
         {restaurantList.length === 0 ?

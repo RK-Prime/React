@@ -1,21 +1,26 @@
 import {Link} from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import userContext from '../functions.js/userContext';
 // import LoginModal from './Loginmodal';
 
 
 const SignUp = ({setVisible})=>{
 
     // login visible definition
-    const [loginVisible, setLoginVisible] = useState(false);
+    const [loginVisible, setLoginVisible] = useState(true);
+
+    const {setUserNameDisplay} = useContext(userContext);
+
+    // const [dataObj, setdataObj] = useState({});
 
     // Input request body parameters
 
     // Username
-    const [name, setUserName] = useState('');
+    const [name, setName] = useState('');
     // Email
-    const [email, setUserEmail] = useState('');
+    const [email, setEmail] = useState('');
     // Password
-    const [password, setUserPassword] = useState('');
+    const [password, setPassword] = useState('');
 
     const formObj = {
         emailText : 'Email',
@@ -49,15 +54,26 @@ const SignUp = ({setVisible})=>{
             if(!response.ok){
                 throw new Error(`Response Status : ${response.status}`);
             }
-            console.log(response);
+            // console.log(response);
             return response.json();
         }).then((data)=>{
             console.log(data);
+            // console.log(`Access Token of ${data.user.name} : ${data.accessToken}`);
+
+            // storing accessToken on client side for a specific session.
+            sessionStorage.setItem('AccessToken',data.accessToken);
+            sessionStorage.setItem('UserID', data.user.id);
+            sessionStorage.setItem('UserName', data.user.name);
+            setUserNameDisplay(sessionStorage.getItem('UserName'));
+
             return data;
         })
-
         setVisible(false);
+        setTimeout(()=>{
+            window.location.reload();
+        },1000)
 
+        // setUserNameDisplay(dataObj.user.name);
         // Token check and user login;
 
     };
@@ -66,7 +82,7 @@ const SignUp = ({setVisible})=>{
 
         console.log('Sign Up!!');
 
-        fetch('http://192.168.29.222:5000/api/userRegister',{
+        fetch('http://localhost:5000/api/userRegister',{
             method:"POST",
             headers : {
                 "Content-Type":"application/json",
@@ -86,8 +102,8 @@ const SignUp = ({setVisible})=>{
             return response.json();
         })
         .then((data)=>{
-        // console.log(data);
-            return data;
+        console.log(data);
+        return data;
         });
 
         setVisible(false);
@@ -113,16 +129,16 @@ const SignUp = ({setVisible})=>{
 
             {/* Email ID */}
             <label className='formlabel'>{formObj.emailText}</label>
-            <input className='forminput' type='text' placeholder="Email"
+            <input className='forminput' type='email' placeholder="Email"
             onChange={(e)=>{
-                setUserEmail(e.target.value);
+                setEmail(e.target.value);
             }}
             required/>
             {/* Password */}
             <label className='formlabel'>{formObj.passwordText}</label>
             <input className='forminput' type='password' placeholder="Password"
             onChange={(e)=>{
-                setUserPassword(e.target.value);
+                setPassword(e.target.value);
             }}
             required/>
             {/* Remember Me */}
@@ -171,21 +187,21 @@ const SignUp = ({setVisible})=>{
             <label className='formlabel'>{formObj.usernameText}</label>
             <input className='forminput' type='text' placeholder="Username"
             onChange={(e)=>{
-                setUserName(e.target.value);
+                setName(e.target.value);
             }}
             required/>
             {/* Email ID */}
             <label className='formlabel'>{formObj.emailText}</label>
             <input className='forminput' type='text' placeholder="Email"
             onChange={(e)=>{
-                setUserEmail(e.target.value);
+                setEmail(e.target.value);
             }}
             required/>
             {/* Password */}
             <label className='formlabel'>{formObj.passwordText}</label>
             <input className='forminput' type='password' placeholder="Password" 
             onChange={(e)=>{
-                setUserPassword(e.target.value);
+                setPassword(e.target.value);
             }}
             required/>
             {/* Remember Me */}

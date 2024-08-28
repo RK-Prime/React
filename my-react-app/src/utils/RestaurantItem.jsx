@@ -1,21 +1,76 @@
 import { faStar} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { colorFunc } from "../functions.js/ComponentFunctions.js";
-import { addItem } from "../functions.js/cartSlice.js";
-import { useDispatch } from 'react-redux';
+import { useContext } from "react";
+import UserContext from "../functions.js/userContext.js";
+// import { addItem } from "../functions.js/cartSlice.js";
+// import { useDispatch } from 'react-redux';
+
+// import $ from 'jquery';
 
 const RestaurantItem = ({itemInfo})=>{
 
-    const dispatch = useDispatch();
+    const {cartitems, setCartItemslen, cartitemslen} = useContext(UserContext);
+
+    // const dispatch = useDispatch();
 
     // Function for Dispatching an Action
-    const handleAddItem = (item)=>{
-        dispatch(addItem(item));
-        // dispatching the addItem function for the item value
+    // const handleAddItem = (item)=>{
+    //     dispatch(addItem(item));
+    //     // dispatching the addItem function for the item value
+    // }
+
+    function addItem(iteminfo){
+        console.log('Item Added!!');
+        // console.log(iteminfo);
+
+        fetch('http://localhost:5000/api/cart/addItem',{
+            method:"POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            mode:'cors',
+            body: JSON.stringify({
+                _id : sessionStorage.getItem('UserID'),
+                cartitem : iteminfo
+            })
+        })
+        .then((response)=>{
+            
+            if(!response.ok){
+                throw new Error(`Response status : ${response.status}`)
+            }
+
+            console.log(sessionStorage.getItem('UserID'));
+
+            return response.json();
+        })
+        .then((data)=>{
+            console.log(`data : ${data}`)
+            return data;
+        })
+        .catch((err)=>{
+            console.log(`Error Occured!! : ${err}`);
+        })
+    }
+
+
+    function cartlengthfunc(){
+
+        setCartItemslen(cartitemslen + 1);
+
+        // cartitems.length = cartitems.length + 1;
+
+        console.log(cartitemslen);
+    }
+
+    function handleAddItem(itemInfo){
+        addItem(itemInfo);
+        // setCartItems(Array(cartitems.length()));
     }
 
     return(
-    <div style={{margin:" 5vh 0px 10vh 0px"}}>
+    <div style={{margin:"0px 0px", padding:'0px'}}>
         <section className="itemSection" key={itemInfo.id}>
             <span>
                 <h3 className="itemHead">{itemInfo.name}</h3>
@@ -37,6 +92,8 @@ const RestaurantItem = ({itemInfo})=>{
                 <button className="itemImgbtn" 
                 onClick={()=>{
                     handleAddItem(itemInfo);
+                    console.log(cartitems.length + 1);
+                    cartlengthfunc()
                 }}>Add+</button>
             </span>
         </section>

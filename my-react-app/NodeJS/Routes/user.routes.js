@@ -15,4 +15,10 @@ module.exports = (app)=>{
 
     // GET Operation for all user Information
     app.get('/api/UsersInfo', userController.showAll);
+
+    // POST operation for adding cart Items
+    app.post('/api/cart/addItem', userController.cartAddItem);
+
+    // GET operation for getting cart Iems
+    app.post('/api/cart/getCartItem', userController.getCartItem);
 };

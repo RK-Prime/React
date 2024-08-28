@@ -91,7 +91,7 @@ exports.login = (req, res)=>{
         })
     }).catch((err)=>{
 
-        res.status(500).send({message : `Server did not respond!! ${err}`})
+        res.status(500).send({message : `Server did not respond!!`})
     })
 }
 
@@ -130,6 +130,56 @@ exports.showAll = (req,res)=>{
     // }
 
     // res.status(403).json({message:"Please provide valid authentication method!!"});
+}
+
+exports.cartAddItem = (req,res)=>{
+    let {_id, cartitem} = req.body;
+
+    userModel.findOne({_id})
+    .then((data)=>{
+        if(!data){ 
+            res.status(400).json({message : "User Data Error!!"})           
+        }
+
+        // console.log(data);
+        data.cart.push(cartitem);
+
+        data.save()
+        .then(()=>{
+            // console.log(data);
+            return res.status(200).json({message : 'Item Added Successfuly!!'});
+        })
+        .catch((err)=>{
+            res.status(500).json({message : 'Error Saving Item!!'});
+        })
+        })
+        .catch((err)=>{
+            res.status(404).send({message : "Data Not Found!!", error : err})
+        })
+}
+
+exports.getCartItem = (req,res)=>{
+    let {_id} = req.body;
+
+    userModel.findOne({_id})
+    .then((data)=>{
+
+        console.log(data);
+
+        if(!data){
+            res.status(400).json({message: 'User Data Error!!'})
+        }
+
+        console.log(data);
+
+        res.status(200).json(data);
+        // return data;
+        // res.status(200).json(data);
+        // return response.json();
+    })
+    .catch((err)=>{
+        res.status(404).send({error : 'Internal Server Error'});
+    })
 }
 
 // bcrypt library for encryption
