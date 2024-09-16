@@ -26,12 +26,24 @@ const Header = ()=>{
     // Here, we are getting the items array stored inside the slice,
     // with name cart, and slice present inside the appStore.
     
-    const {cartitems, setCartItems, setIsVisible, cartitemslen, setCartItemslen} = useContext(UserContext);
+    const {cartitems, setCartItems, 
+        setIsVisible, 
+        cartitemslen, setCartItemslen,
+        // setEmail, setPassword
+    } = useContext(UserContext);
 
 
     useEffect(()=>{
         onlineStatus();
-        sessionStorage.getItem('UserID') ? Cart_fetch() : console.log('Login to view Cart!!');
+        sessionStorage.getItem('AccessToken') === null ? 
+        console.log('Login to view Cart!!')
+        : Cart_fetch()
+
+        // autoLogin();
+
+        // localStorage.getItem('rememberlogin') === null?
+        // console.log('New User!!')
+        // : autoLogin();
     },[])
 
     function onlineStatus(){
@@ -43,8 +55,53 @@ const Header = ()=>{
         })
     }
 
+    // function autoLogin(){
+
+    //     let userinfo = localStorage.getItem('rememberlogin');
+    //     let userId = JSON.parse(userinfo);
+
+    //     console.log(`userid : ${userId.value_id}`);
+
+    //     let userdata = fetch('http://localhost:5000/api/autoLogin',{
+    //         method : 'POST',
+    //         mode : 'cors',
+    //         headers :{
+    //             'Content-Type':'application/json'
+    //         },
+    //         body:JSON.stringify({
+    //             _id : userId.value_id
+    //         })
+    //     })
+    //     .then((response)=>{
+
+    //         if(!response.ok){
+    //             console.log('Response not Found!!');
+    //             return ;
+    //         }
+
+    //         return response.json();
+    //     })
+    //     .then((data)=>{
+
+    //         return data;
+    //     })
+    //     .catch((err)=>{
+    //         return err
+    //     })
+        
+    //     const userdataobj = ()=>{
+    //         userdata.then((a)=>{
+    //             setEmail(a.email);
+    //             setPassword(a.password);
+    //             return a
+    //         })
+    //     }
+
+    //     userdataobj();
+    // }
 
     function Cart_fetch(){
+        
         let data = fetch('http://localhost:5000/api/cart/getCartItem',{
             method : "POST",
             headers : {
@@ -57,9 +114,8 @@ const Header = ()=>{
         })
         .then((response)=>{
 
-            if(!response.ok){
-                throw new Error(`Response Status : ${response.status}`);
-            }
+            // if(!response.ok){
+            // }
 
             // console.log(response);
             // let resjson = response.json();
@@ -73,6 +129,11 @@ const Header = ()=>{
 
             // console.log(data.cart);
             // setdataItems(data.cart);
+
+            if(data===null){
+                return cartitems;
+            }
+
             return data.cart;
         })
 
@@ -121,11 +182,14 @@ const Header = ()=>{
                 <li><Link className='link' to="/help" preventScrollReset={true}><FontAwesomeIcon icon={faLifeRing} />&nbsp;Help</Link></li>
                 <li><Link className='link' to="/cart" preventScrollReset={true}
                 onClick={()=>{
-                    // handleCartFetch();
-                    console.log(cartitemslen);
+                    Cart_fetch();
+                    if(window.location.pathname=== '/cart'){
+                        window.location.reload();
+                    }
+                    // console.log(cartitemslen);
                     // setdataItems(Cart_fetch())
                 }}
-                ><FontAwesomeIcon icon={faCartShopping} />&nbsp;Cart {cartitemslen == 0 ? cartitems.length : cartitemslen}</Link></li>
+                ><FontAwesomeIcon icon={faCartShopping} />&nbsp;Cart{cartitemslen === 0 ? cartitems.length : cartitemslen}</Link></li>
                 {
                 sessionStorage.getItem('AccessToken') ? 
                 <li><Link className='link' preventScrollReset={true} 

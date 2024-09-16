@@ -164,9 +164,10 @@ var apiFunc = ()=>{
         console.log(student);
         console.log(student.length);
 
-        for(let i = 0;i<student.length;i++){
-            console.log(student[i])
-        }
+        student.map((stu)=>{ console.log(stu); })
+        // for(let i = 0;i<student.length;i++){
+        //     console.log(student[i])
+        // }
     });
 
     app.get('/studentvaluesclear',async(req,res)=>{

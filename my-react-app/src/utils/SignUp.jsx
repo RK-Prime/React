@@ -9,7 +9,10 @@ const SignUp = ({setVisible})=>{
     // login visible definition
     const [loginVisible, setLoginVisible] = useState(true);
 
-    const {setUserNameDisplay} = useContext(userContext);
+    const {setUserNameDisplay,
+        // email, setEmail,
+        // password, setPassword
+    } = useContext(userContext);
 
     // const [dataObj, setdataObj] = useState({});
 
@@ -21,6 +24,14 @@ const SignUp = ({setVisible})=>{
     const [email, setEmail] = useState('');
     // Password
     const [password, setPassword] = useState('');
+    // Login remember me
+    // const [loginRemember, setLoginRemember] = useState(false);
+
+    // useEffect(()=>{
+    //     localStorage.getItem('rememberlogin') === null ?
+    //     console.log('Please Login!!')
+    //     : autologin();
+    // },[])
 
     const formObj = {
         emailText : 'Email',
@@ -38,6 +49,33 @@ const SignUp = ({setVisible})=>{
         loginVisible ? login() : signup();
     };
 
+    // function login_cred_localstorage(data){
+
+    //     const present = new Date();
+    //     const expiry_time = 1000*10;
+
+    //     const item = JSON.stringify({
+    //         value_token : data.accessToken,
+    //         value_id : data.user.id,
+    //         value_username : data.user.name,
+    //         expiryTime : present.getTime() + expiry_time
+    //     });
+
+    //     console.log(`item : ${item}`);
+    //     console.log(`item expiryTime :  ${item.expiryTime}`);
+
+    //     localStorage.setItem('rememberlogin', item);
+    //     // localStorage.setItem('UserID', data.user.id)
+    //     // localStorage.setItem('UserName', data.user.name)
+    // }
+
+    // function login_cred_sessionstorage(data){
+    //         // sessionStorage.setItem('AccessToken',data.accessToken)
+    //         sessionStorage.setItem('UserID', data.user.id)
+    //         sessionStorage.setItem('UserName', data.user.name)
+    // }
+
+
     function login(){
         console.log('Login !!');
 
@@ -51,19 +89,25 @@ const SignUp = ({setVisible})=>{
                 password : password
             })
         }).then((response)=>{
+
             if(!response.ok){
                 throw new Error(`Response Status : ${response.status}`);
             }
             // console.log(response);
             return response.json();
         }).then((data)=>{
-            console.log(data);
+            // console.log(data);
             // console.log(`Access Token of ${data.user.name} : ${data.accessToken}`);
 
             // storing accessToken on client side for a specific session.
+            // loginRemember ? login_cred_localstorage(data) : login_cred_sessionstorage(data) 
+
             sessionStorage.setItem('AccessToken',data.accessToken);
             sessionStorage.setItem('UserID', data.user.id);
-            sessionStorage.setItem('UserName', data.user.name);
+            sessionStorage.setItem('UserName', data.user.name)
+
+            // login_localstorage();
+
             setUserNameDisplay(sessionStorage.getItem('UserName'));
 
             return data;
@@ -102,7 +146,9 @@ const SignUp = ({setVisible})=>{
             return response.json();
         })
         .then((data)=>{
-        console.log(data);
+
+        console.log(`signup data : ${data}`);
+
         return data;
         });
 
@@ -116,7 +162,7 @@ const SignUp = ({setVisible})=>{
         ? 
         // Login Form
         <div className='loginform'>
-        <div className='formlogin'>
+        <form className='formlogin' action='#' onSubmit={handleSubmit}>
             <span className='cancelspan'><button 
             onClick={()=>{
                 setVisible(false);
@@ -150,12 +196,12 @@ const SignUp = ({setVisible})=>{
             <span className='span loginspan'>
             <label>{formObj.logintosignupText}</label>
             {/* Later */}
-            <Link className='login' 
+            <Link className='loginlink' 
             onClick={()=>{
                 setLoginVisible(false);
             }}>{formObj.signupText}</Link>
             </span>
-            {/* Sign Up Button */}
+            {/* Sign Up Link */}
             <span className='btnspan'>
             <button className='btn cancel'
             onClick={()=>{
@@ -163,16 +209,18 @@ const SignUp = ({setVisible})=>{
             }}
             >{formObj.cancelText}</button>
             {/* Login Button */}
-            <button className='btn signup' 
-            onClick={handleSubmit}
+            <button className='btn login' 
+            type='submit'
+            // formAction={handleSubmit}
+            // onClick={handleSubmit}
             >{formObj.loginText}</button>
             </span>
-        </div>
+        </form>
         </div>
         : 
         // SignUp Form
         <div className='signupform'>
-        <div className='formsignup'>
+        <form className='formsignup' action='#' onSubmit={handleSubmit}>
             <span className='cancelspan'><button 
             onClick={()=>{
                 setVisible(false);
@@ -212,7 +260,7 @@ const SignUp = ({setVisible})=>{
             {/* Create Account signupopen */}
             <span className='span loginspan'>
             <label>{formObj.signuptologinText}</label>
-            <Link className='login'
+            <Link className='signuplink'
             onClick={()=>{
                 setLoginVisible(true);
             }}
@@ -226,11 +274,12 @@ const SignUp = ({setVisible})=>{
             }}
             >{formObj.cancelText}</button>
             {/* SignUp Button */}
-            <button className='btn signup' 
-            onClick={handleSubmit}
+            <button className='btn signup'
+            type='submit'
+            // onClick={handleSubmit}
             >{formObj.signupText}</button>
             </span>
-        </div>
+        </form>
         </div>
         }
         </>

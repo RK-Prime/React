@@ -16,7 +16,7 @@ import { Provider } from 'react-redux';
 import appStore from './functions.js/appStoreRedux.js';
 
 import UserContext from './functions.js/userContext.js';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 function App() {
 
@@ -24,6 +24,12 @@ function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartItemslen, setCartItemslen] = useState(cartItems.length);
+  const [useremail, setEmail] = useState('');
+  const [userpassword, setPassword] = useState('');
+  // const [itemobj, setItemobj] = useState({});
+  const [Itemcount, setItemCount] = useState([]);
+  // const [ItemId, setItemId] = useState('');
+
 
   return (
     <Provider store={appStore}>
@@ -31,7 +37,12 @@ function App() {
     value={{username : userNameDisplay, setUserNameDisplay,
     visible: isVisible, setIsVisible,
     cartitems : cartItems, setCartItems,
-    cartitemslen : cartItemslen, setCartItemslen
+    cartitemslen : cartItemslen, setCartItemslen,
+    email : useremail, setEmail,
+    password : userpassword, setPassword,
+    itemcount : Itemcount, setItemCount,
+    // items : ItemId, setItemId,
+    // itemObj : itemobj, setItemobj
     }}>
     <Header/>
     <Outlet/>

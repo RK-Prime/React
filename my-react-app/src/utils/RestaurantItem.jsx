@@ -10,7 +10,9 @@ import UserContext from "../functions.js/userContext.js";
 
 const RestaurantItem = ({itemInfo})=>{
 
-    const {cartitems, setCartItemslen, cartitemslen} = useContext(UserContext);
+    const {setCartItemslen, cartitemslen,
+        cartitems, setCartItems
+    } = useContext(UserContext);
 
     // const dispatch = useDispatch();
 
@@ -24,7 +26,7 @@ const RestaurantItem = ({itemInfo})=>{
         console.log('Item Added!!');
         // console.log(iteminfo);
 
-        fetch('http://localhost:5000/api/cart/addItem',{
+        fetch('http://localhost:5000/api/cart/updateItem',{
             method:"POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -38,6 +40,7 @@ const RestaurantItem = ({itemInfo})=>{
         .then((response)=>{
             
             if(!response.ok){
+                // a function will be implemented here
                 throw new Error(`Response status : ${response.status}`)
             }
 
@@ -46,12 +49,15 @@ const RestaurantItem = ({itemInfo})=>{
             return response.json();
         })
         .then((data)=>{
-            console.log(`data : ${data}`)
+            // console.log(`data : ${data}`)
+            console.log(typeof(data));
             return data;
         })
-        .catch((err)=>{
-            console.log(`Error Occured!! : ${err}`);
-        })
+
+
+        // .catch((err)=>{
+        //     throw new Error (`Error Occurred \n : ${err}`)
+        // })
     }
 
 
@@ -61,11 +67,45 @@ const RestaurantItem = ({itemInfo})=>{
 
         // cartitems.length = cartitems.length + 1;
 
-        console.log(cartitemslen);
+        // console.log(cartitemslen);
+    }
+
+    function storeAddItem(iteminfo){
+
+        // if(cartitems.length === 0){
+        //     setCartItems(()=>{
+        //         cartitems.push(iteminfo)
+    
+        //         return cartitems;
+        //     })
+        // }
+
+        setCartItems(()=>{
+            cartitems.push(iteminfo)
+
+            return cartitems
+        })
+
+        console.log(iteminfo)
+        console.log(`Item Added to store!!`);
+        
+    }
+
+    function items(itemInfo){
+        console.log(cartitems);
+        addItem(itemInfo)
     }
 
     function handleAddItem(itemInfo){
-        addItem(itemInfo);
+
+        // addItem(itemInfo);
+        
+        sessionStorage.getItem('UserID') === null? 
+        storeAddItem(itemInfo)
+        :
+        items(itemInfo);
+        
+
         // setCartItems(Array(cartitems.length()));
     }
 
@@ -92,7 +132,7 @@ const RestaurantItem = ({itemInfo})=>{
                 <button className="itemImgbtn" 
                 onClick={()=>{
                     handleAddItem(itemInfo);
-                    console.log(cartitems.length + 1);
+                    // console.log(cartitems.length + 1);
                     cartlengthfunc()
                 }}>Add+</button>
             </span>

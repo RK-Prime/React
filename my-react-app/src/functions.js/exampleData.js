@@ -13,7 +13,8 @@ export const data =()=> {
                 portionSize: "0 gram",
                 imageId : "6552c6cd5fe220783cb10328876ca224",
                 rating: "4.9",
-                ratingCount : ""
+                ratingCount : "",
+                amount : 1
             },
             {
                 id:"36092375",
@@ -24,7 +25,8 @@ export const data =()=> {
                 portionSize: "0 gram",
                 imageId : "375e24029a6ba658108e27a987fb5e2d",
                 rating: "2.2",
-                ratingCount :"10"
+                ratingCount :"10",
+                amount : 1
             }
             ,
             {
@@ -36,7 +38,8 @@ export const data =()=> {
                 portionSize: "0 gram",
                 imageId : "d621c8e48a236cd9fee5f3cacfa3c12d",
                 rating: "3.8",
-                ratingCount : "152"
+                ratingCount : "152",
+                amount : 1
             },
             {
                 id:"68548431",

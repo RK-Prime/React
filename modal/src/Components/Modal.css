@@ -1,0 +1,89 @@
+.modalbg{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    background-color: lightgrey;
+    height: 100vh;
+    width: 100%;
+}
+
+.modalcontainer{
+    background-color: white;
+
+    padding: 20px;
+    height: fit-content;
+    width: 400px;
+
+    transform: translate(0%, 50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    box-shadow: grey 0px 0px 10px;
+}
+
+.titlespan{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.titleclosebtn{
+    background-color: transparent;
+    border: none;
+
+    font-weight: bolder;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.titleclosebtn:hover{
+    color: darkslategrey;
+}
+
+.modaltitle{
+    margin: 20px;
+    margin-top: 0px;
+    padding: 0px;
+}
+
+.footer{
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 30px 0px 20px 0px;
+}
+
+.btn{
+    border-radius: 10px;
+
+    padding: 13px 25px;
+    font-size: 15px;
+
+    cursor: pointer;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.openbtn{
+    background-color: blue;
+    color: white;
+}
+
+.openbtn:hover{
+    background-color: darkblue;
+}
+
+.closebtn{
+    background-color: red;
+    color: white;
+}
+
+.closebtn:hover{
+    background-color: darkred;
+}

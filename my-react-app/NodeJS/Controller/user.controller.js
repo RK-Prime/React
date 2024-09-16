@@ -61,6 +61,7 @@ exports.login = (req, res)=>{
     userModel.findOne({email}).then((data)=>{
         if(!data){
             res.status(404).json({message:"User not Found!!"})
+            return;
         }
         
         // Comparing password to check the validity
@@ -68,7 +69,7 @@ exports.login = (req, res)=>{
         
         // If password is not valid
         if(!isValidPassword){
-            res.status(401).send({message: "Invalid Password!!"});
+            return res.status(401).send({message: "Invalid Password!!"});
         }
 
         // sign the jwt token
@@ -81,6 +82,7 @@ exports.login = (req, res)=>{
         );
 
         // if password is valid
+        
         res.send({
             user :{
                 id : data._id,
@@ -89,9 +91,12 @@ exports.login = (req, res)=>{
             },
             accessToken : token
         })
+
+        return;
     }).catch((err)=>{
 
-        res.status(500).send({message : `Server did not respond!!`})
+        res.status(500).send({message : `Server did not respond!!`});
+        return;
     })
 }
 
@@ -105,15 +110,44 @@ exports.showUser=(req,res)=>{
         // 
         userModel.findOne({email})
         .then((data)=>{
-            res.status(200).send(data);
+            return res.status(200).send(data);
         }).catch((err)=>{
             res.status(404).json({message:"Error 404!!\nUser not Found!!"});
+            return;
         })
     }
     else{
         res.status(401).json({message : "Please provide valid Authentication credentials!!"})
+        return;
     }
 };
+
+// exports.getUserData = (req,res)=>{
+//     const {_id} = req.body;
+
+//     if(_id){
+//         userModel.findOne({_id})
+//         .then((data)=>{
+
+//             console.log(`data : ${data}`);
+
+//             const email = data.email
+//             const password = data.password
+//             return res.status(200).send({email, password});
+            
+//         })
+//         .catch((err)=>{
+//             res.status(404).json({message : 'Data Error!!'})
+//             return;
+//         })
+//     }
+
+//     else{
+//         res.status(401).json({message : 'User Not Found!!'})
+//         return;
+//     }
+
+// }
 
 exports.showAll = (req,res)=>{
     // const {showAll} = req.body;
@@ -138,10 +172,9 @@ exports.cartAddItem = (req,res)=>{
     userModel.findOne({_id})
     .then((data)=>{
         if(!data){ 
-            res.status(400).json({message : "User Data Error!!"})           
+            return res.status(400).json({message : "User Data Error!!"})           
         }
 
-        // console.log(data);
         data.cart.push(cartitem);
 
         data.save()
@@ -150,36 +183,67 @@ exports.cartAddItem = (req,res)=>{
             return res.status(200).json({message : 'Item Added Successfuly!!'});
         })
         .catch((err)=>{
-            res.status(500).json({message : 'Error Saving Item!!'});
+            return res.status(500).json({message : 'Error Saving Item!!'});
         })
+
+        return
         })
         .catch((err)=>{
-            res.status(404).send({message : "Data Not Found!!", error : err})
-        })
+        return res.status(404).json({message : err, error : err})
+    })
 }
 
 exports.getCartItem = (req,res)=>{
     let {_id} = req.body;
 
-    userModel.findOne({_id})
-    .then((data)=>{
+        userModel.findOne({_id})
+        .then((data)=>{
 
-        console.log(data);
-
+        // console.log(data);
         if(!data){
-            res.status(400).json({message: 'User Data Error!!'})
+            return res.status(400).send({message: 'User Data Error!!'});
         }
 
-        console.log(data);
-
+        // console.log(data);
         res.status(200).json(data);
+        return data;    
         // return data;
         // res.status(200).json(data);
         // return response.json();
     })
     .catch((err)=>{
-        res.status(404).send({error : 'Internal Server Error'});
+        return res.status(404).send({message : 'Internal Server Error'});
     })
+}
+
+exports.clearCart = (req,res)=>{
+    let {_id} = req.body;
+
+    userModel.findOne({_id :_id})
+    .then((data)=>{
+
+        if(!data){
+            res.status(404).json({message : 'User Not Found!!'});
+        }
+
+        // console.log(data.cart.length);
+
+        data.cart = [] 
+        
+        // console.log(data.cart);
+
+        data.save()
+        .then(()=>{
+            return res.status(200).send(data);
+        })
+        .catch((err)=>{
+            res.status(404).json({message : "User Not Found!!"})
+        })
+
+    })
+    .catch((err)=>{
+        res.status(500).send({message : 'User Not Found!!'})
+    });
 }
 
 // bcrypt library for encryption

@@ -17,8 +17,14 @@ module.exports = (app)=>{
     app.get('/api/UsersInfo', userController.showAll);
 
     // POST operation for adding cart Items
-    app.post('/api/cart/addItem', userController.cartAddItem);
+    app.post('/api/cart/updateItem', userController.cartAddItem);
 
-    // GET operation for getting cart Iems
+    // POST operation for getting cart Items
     app.post('/api/cart/getCartItem', userController.getCartItem);
+
+    // POST operation for deleting cart Items
+    app.post('/api/cart/deleteItems', userController.clearCart);
+
+    // POST operation for auto login
+    // app.post('/api/autoLogin', userController.getUserData);
 };
