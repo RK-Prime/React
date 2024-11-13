@@ -20,6 +20,10 @@ export const Cart = () =>{
     
     let cartitems_Count = [];
 
+    console.log('Cart Page!!');
+    console.log('cartitems!!');
+    console.log(cartitems);
+
     cartitems.forEach((item)=>{
         const existingItem = cartitems_Count.find((itemid)=>itemid.id===item.id);
 

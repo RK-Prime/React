@@ -39,12 +39,15 @@ const Header = ()=>{
         console.log('Login to view Cart!!')
         : Cart_fetch()
 
+
+        setCartItemslen(cartitems.length);
+
         // autoLogin();
 
         // localStorage.getItem('rememberlogin') === null?
         // console.log('New User!!')
         // : autoLogin();
-    },[])
+    },[cartitems])
 
     function onlineStatus(){
         window.addEventListener('online', function(){
@@ -99,8 +102,11 @@ const Header = ()=>{
 
     //     userdataobj();
     // }
+    function CartOffline(){
+        setCartItems(cartitems);
+    }
 
-    function Cart_fetch(){
+    function CartOnline(){
         
         let data = fetch('http://localhost:5000/api/cart/getCartItem',{
             method : "POST",
@@ -137,23 +143,29 @@ const Header = ()=>{
             return data.cart;
         })
 
-        const dataobj = ()=>{
+        // const dataobj = ()=>{
             data.then((a)=>{
-                // console.log(`a : ${a}`);
+                console.log(`a : ${a}`);
                 // setdataItems(a);
                 setCartItems(a);
-                setCartItemslen(a.length);
+                // setCartItemslen(a.length);
                 return a
             })
-        }
+        // }
 
-        dataobj();
+        // dataobj();
 
         // console.log(dataItems);
 
         // console.log(dataobj())
 
         return data;
+    }
+
+    function Cart_fetch(){
+        sessionStorage.getItem('UserID')===null?
+        CartOffline():
+        CartOnline();
     }
 
     // async function handleCartFetch(){
@@ -166,7 +178,8 @@ const Header = ()=>{
 
         // setdataItems(items);
     // }
-
+    console.log(`cartitemslen : ${cartitemslen}`);
+    console.log(`cartitems : ${cartitems}`);
     return(
         <nav id="headernav">
         <Link to="/"><img id="sitelogo" alt="sitelogo" src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_192,h_192/portal/c/logo_2022.png" /></Link>
@@ -183,10 +196,12 @@ const Header = ()=>{
                 <li><Link className='link' to="/cart" preventScrollReset={true}
                 onClick={()=>{
                     Cart_fetch();
-                    if(window.location.pathname=== '/cart'){
-                        window.location.reload();
-                    }
-                    // console.log(cartitemslen);
+                    // if(window.location.pathname=== '/cart'){
+                    //     window.location.reload();
+                    // }
+                    console.log(cartitemslen);
+                    console.log('Header !!');
+                    console.log(cartitems);
                     // setdataItems(Cart_fetch())
                 }}
                 ><FontAwesomeIcon icon={faCartShopping} />&nbsp;Cart{cartitemslen === 0 ? cartitems.length : cartitemslen}</Link></li>

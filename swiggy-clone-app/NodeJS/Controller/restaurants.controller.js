@@ -8,16 +8,23 @@ const mongoose = require("mongoose");
 // Saving client data into the Database Model
 exports.create = (req, res) => {
   // Getting data from the request Body from the client
-  const { name, avgRating, cuisines, cloudinaryImgId, costForTwo, menuItems } =
-    req.body;
+
+  const keys = Object.keys(req.body);
+  var values = {};
+
+  for(let i=0;i<keys.length;i++){
+  values = req.body[keys[i]];
+  }
+
+  const { name, avgRating, cuisines, cloudinaryImageId, costForTwo} = 
+  values
 
   console.log({
     name,
     avgRating,
     cuisines,
-    cloudinaryImgId,
+    cloudinaryImageId,
     costForTwo,
-    menuItems,
   });
 
   // creating a new Restaurant instance for storing into the model
@@ -25,9 +32,8 @@ exports.create = (req, res) => {
     name,
     avgRating,
     cuisines,
-    cloudinaryImgId,
+    cloudinaryImageId,
     costForTwo,
-    menuItems,
   });
 
   newRestaurant

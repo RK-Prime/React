@@ -60,16 +60,6 @@ const RestaurantItem = ({itemInfo})=>{
         // })
     }
 
-
-    function cartlengthfunc(){
-
-        setCartItemslen(cartitemslen + 1);
-
-        // cartitems.length = cartitems.length + 1;
-
-        // console.log(cartitemslen);
-    }
-
     function storeAddItem(iteminfo){
 
         // if(cartitems.length === 0){
@@ -85,13 +75,17 @@ const RestaurantItem = ({itemInfo})=>{
 
             return cartitems
         })
+            console.log('cartitems');
+            console.log(cartitems);
+
+        setCartItemslen(cartitemslen + 1);
 
         console.log(iteminfo)
         console.log(`Item Added to store!!`);
         
     }
 
-    function items(itemInfo){
+    function addItemstoCart(itemInfo){
         console.log(cartitems);
         addItem(itemInfo)
     }
@@ -103,7 +97,7 @@ const RestaurantItem = ({itemInfo})=>{
         sessionStorage.getItem('UserID') === null? 
         storeAddItem(itemInfo)
         :
-        items(itemInfo);
+        addItemstoCart(itemInfo);
         
 
         // setCartItems(Array(cartitems.length()));
@@ -133,7 +127,6 @@ const RestaurantItem = ({itemInfo})=>{
                 onClick={()=>{
                     handleAddItem(itemInfo);
                     // console.log(cartitems.length + 1);
-                    cartlengthfunc()
                 }}>Add+</button>
             </span>
         </section>

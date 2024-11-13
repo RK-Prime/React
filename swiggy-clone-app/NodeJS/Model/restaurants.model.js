@@ -5,9 +5,8 @@ const restaurantSchema = new mongoose.Schema({
     name : String,
     avgRating : String,
     cuisines : Array,
-    cloudinaryImgId : String,
+    cloudinaryImageId : String,
     costForTwo : String,
-    menuItems : Array
 });
 
 // Creating Model inorder to use Document Schema and Create Documents

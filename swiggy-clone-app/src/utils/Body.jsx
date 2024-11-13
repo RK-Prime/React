@@ -87,6 +87,8 @@ const Body = () => {
 
     const swiggyRestaurant = swiggyResData.infoWithStyle?.restaurants;
 
+
+
     // const swiggyRestaurant =
     //   dataobj.data.success.cards[4].gridWidget.gridElements.infoWithStyle
     //     .restaurants;
@@ -156,6 +158,30 @@ const Body = () => {
 
   /* if restaurantList is undefined */
 
+  function datafetch(data){
+    fetch('http://localhost:5000/api/restaurantpost', {
+      method:'POST',
+      mode : 'cors',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        data
+      })
+    })
+    .then((response)=>{
+      // console.log(response.json());
+      return response.json();
+    })
+    .then((data)=>{
+      console.log(data);
+    })
+
+    console.log('Operation completed!!');
+  }
+
+
+
   return (
 
     <>
@@ -179,7 +205,9 @@ const Body = () => {
         // Next time will add a small loading screen.
         :(
           <div id="Rescards_div">
-          {restaurantList.map((restaurant) => (
+          {restaurantList.map((restaurant) =>{
+            datafetch(restaurant.info)
+            return (
             <Link className="res_link" to={'/restaurant/'+restaurant.info.id}>
               <Rescard 
               key={restaurant.info.id}
@@ -189,11 +217,11 @@ const Body = () => {
               address={restaurant.info.locality}
             />
             </Link>
-          ))}
-          </div>
+          )}
         )}
 
-        
+        </div>
+        )}
     </div>
         
     </>
